@@ -5,8 +5,6 @@
 #' Written by Ethan Whitman (ethan.whitman@duke.edu)
 #'  
 #' @param data Data.frame with the output of LoadFreeSurferStats().
-#' 
-#' @param modeldir Character string of the path to the directory where the DunedinPACNI model coefficients are saved.
 #'
 #' @param outdir Character string of the path to the desired output directory. 
 #' 
@@ -23,8 +21,6 @@
 #'
 #'     This command will throw an error if you are missing more than >20 percent of the ROIs needed for the DunedinPACNI algorithm
 #' 
-#' @param imputedir (optional) Character string of the path to the directory where the mean values from the Dunedin Study are saved. You only need
-#'    this argument if you are missing ROIs. Default is NULL.
 #'    
 #' @return The output of this function will be a data.frame with DunedinPACNI scores for your dataset. This function will also automatically save this object to an .Rdata file labeled:
 #' 
@@ -35,27 +31,19 @@
 #'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/')
 #' 
 #' ExportDunedinPACNI(data = df,
-#'                    modeldir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
 #'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
-#'                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'),
-#'                    imputedir = '/Users/ew198/Documents/brainpace/results/impute/')
+#'                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
 #' @export
 
 ExportDunedinPACNI <- function(data,
-                               modeldir,
                                outdir,
                                missing_ROIs,
-                               imputedir, 
                                missing_gwr){
 
   # setting default settings
      
-   if (!missing(missing_ROIs) && missing(imputedir)){
-     stop("you indicated that you are missing ROIs but did not add the path to the Dunedin Study means. 
-          need to add an argument for imputedir for ROI imputation")
-   } else if (missing(missing_ROIs) && missing(imputedir)){
+   if (missing(missing_ROIs)){
      missing_ROIs <- NULL
-     imputedir <- NULL
    }
   
   
@@ -86,7 +74,7 @@ ExportDunedinPACNI <- function(data,
     # fix punctuation
     missing_ROIs <- gsub("[-.]", "", missing_ROIs)
     
-    load(paste0(imputedir, 'dunedin_dk_gwr_means.Rdata'))
+    data(dunedin_dk_gwr_means)
     
     # fix punctuation
     names(dunedin_dk_gwr_means) <- gsub("[-.]", "", names(dunedin_dk_gwr_means))
@@ -105,10 +93,10 @@ ExportDunedinPACNI <- function(data,
   
   # load in model weights for PACNI algorithm
    if (missing_gwr == FALSE){
-     load(paste0(modeldir,'coefs_dk_gwr.Rdata'))
+     data(coefs_dk_gwr)
      coefs <- coefs_dk_gwr
    } else if (missing_gwr == TRUE){
-     load(paste0(modeldir,'coefs_dk.Rdata'))
+     data(coefs_dk)
      coefs <- coefs_dk
    }
    
