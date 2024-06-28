@@ -35,8 +35,6 @@ LoadFreeSurferStats <- function(fsdir,
   
   # find first participant label
   
-# profvis({
-    
     sublist <- read.csv(paste0(sublistdir, 'sublist.csv'))$ID
     example_sub <- sublist[1]
     
@@ -196,30 +194,22 @@ LoadFreeSurferStats <- function(fsdir,
       data[y,] <- data_temp[2,]
       y <- y+1
     }
-    
-    # merge in IDs
-   # data <- merge(sublist, data, by = 'ID')
   
   # check for missing data
   
   if (sum(colSums(is.na(data))[colSums(is.na(data)) != 0]) == 0){
-    print('looks like you have no missing data. yay!')
+    print('lLooks like you have no missing data. Great!')
   } else if (sum(colSums(is.na(data))[colSums(is.na(data)) != 0]) > 0){
     
-    cat("\033[31mlooks like you have some missing data. here is the N missing values from your data:\033[0m\n")
+    cat("\033[31mLooks like you have some missing data. Here is the N missing values from your data:\033[0m\n")
     print(colSums(is.na(data))[colSums(is.na(data)) != 0])
     
-    cat("\033[31mComBat cannot handle missing data. we recommend excluding any
-    participants with missing ROIs or covariates, or you may want to run some kind of imputation procedure. 
-    
-    If you have certain ROIs with high incidences of missingness, you could
+    cat("\033[If you have certain ROIs with high incidences of missingness, you could
     consider just excluding those ROIs. If you do this (or have missing ROIs for some other reason), 
     we will automatically impute with data from the Dunedin Study in our DunedinPACNI estimates.
-    ***** BEAR IN MIND: imputing ROI data from the Dunedin Study will worsen the accuracy of 
+    BEAR IN MIND: imputing ROI data from the Dunedin Study will worsen the accuracy of 
     DunedinPACNI estimates.\033[0m\n")
   }
-  
-# })
   
   return(data)
  
