@@ -3,4 +3,5 @@
 export(ExportDunedinPACNI)
 export(LoadFreeSurferStats)
 import(dplyr)
+import(ggseg)
 import(progress)
