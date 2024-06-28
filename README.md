@@ -42,7 +42,7 @@ This process may take a bit of time depending on the number of subjects you are 
 
 This function outputs a data.frame of formatted FreeSurfer phenotypes for all subjects.
 
-## What if I don't have .stats files from FreeSurfer?
+**What if I don't have .stats files from FreeSurfer?**
 In this case, you should pre-format your FreeSurfer data into a .csv file with each row as a unique scan and each column as a FreeSurfer variable. The specific list of variables can be accessed using 'data(ROI_names)'. You must follow the exact naming conventions of 'ROI_names' or else the code will not be able to properly estimate DunedinPACNI.
 
 **ExportDunedinPACNI**
