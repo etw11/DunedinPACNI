@@ -199,7 +199,7 @@ LoadFreeSurferStats <- function(fsdir,
   # check for missing data
   
   if (sum(colSums(is.na(data))[colSums(is.na(data)) != 0]) == 0){
-    print('lLooks like you have no missing data. Great!')
+    print('Looks like you have no missing data. Great!')
   } else if (sum(colSums(is.na(data))[colSums(is.na(data)) != 0]) > 0){
     
     cat("\033[31mLooks like you have some missing data. Here is the N missing values from your data:\033[0m\n")
