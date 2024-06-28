@@ -17,8 +17,6 @@ and each column contains a FreeSurfer phenotype. You will need to exactly match 
 
 You will also need a .csv files of all participant IDs.
 
-This package uses tools from the R packages `dplyr` and `progress`.
-
 # R package
 
 ## Installation
@@ -30,6 +28,8 @@ library(DunedinPACNI)
 ```
 
 The R package for generating DunedinPACNI scores consists of two steps: LoadFreeSurferStats() and then ExportDunedinPACNI().
+
+This package uses tools from the R packages `dplyr` and `progress`. Make sure you have these packages installed prior to using ours.
 
 ## LoadFreeSurferStats
 

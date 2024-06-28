@@ -18,6 +18,7 @@
 #' @examples 
 #' LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/',
 #'                     sublistdir = '/Users/ew198/Documents/brainpace/data/')
+#' @import progress
 #' @export
 
 LoadFreeSurferStats <- function(fsdir, 

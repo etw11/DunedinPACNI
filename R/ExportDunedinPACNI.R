@@ -33,6 +33,7 @@
 #' ExportDunedinPACNI(data = df,
 #'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
 #'                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
+#' @import dplyr
 #' @export
 
 ExportDunedinPACNI <- function(data,

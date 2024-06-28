@@ -4,19 +4,10 @@
 \alias{ExportDunedinPACNI}
 \title{ExportDunedinPACNI}
 \usage{
-ExportDunedinPACNI(
-  data,
-  modeldir,
-  outdir,
-  missing_ROIs,
-  imputedir,
-  missing_gwr
-)
+ExportDunedinPACNI(data, outdir, missing_ROIs, missing_gwr)
 }
 \arguments{
 \item{data}{Data.frame with the output of LoadFreeSurferStats().}
-
-\item{modeldir}{Character string of the path to the directory where the DunedinPACNI model coefficients are saved.}
 
 \item{outdir}{Character string of the path to the desired output directory.}
 
@@ -31,9 +22,6 @@ ExportDunedinPACNI(
     more dramatic effects in datasets that differ substantially in age from the Dunedin Study members.
 
     This command will throw an error if you are missing more than >20 percent of the ROIs needed for the DunedinPACNI algorithm}
-
-\item{imputedir}{(optional) Character string of the path to the directory where the mean values from the Dunedin Study are saved. You only need
-this argument if you are missing ROIs. Default is NULL.}
 }
 \value{
 The output of this function will be a data.frame with DunedinPACNI scores for your dataset. This function will also automatically save this object to an .Rdata file labeled:
@@ -52,8 +40,6 @@ ExportDunedinPACNI(data = df,
                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/')
 
 ExportDunedinPACNI(data = df,
-                   modeldir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
-                   missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'),
-                   imputedir = '/Users/ew198/Documents/brainpace/results/impute/')
+                   missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
 }
