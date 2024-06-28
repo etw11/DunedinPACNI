@@ -40,6 +40,8 @@ ExportDunedinPACNI <- function(data,
                                outdir,
                                missing_ROIs,
                                missing_gwr){
+  
+  library(dplyr)
 
   # setting default settings
      
