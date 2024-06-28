@@ -25,8 +25,6 @@
 LoadFreeSurferStats <- function(fsdir, 
                                 sublistdir,
                                 missing_gwr){
-  library(progress)
-  library(ggseg)
   
   # setting default settings
   if (missing(missing_gwr)){

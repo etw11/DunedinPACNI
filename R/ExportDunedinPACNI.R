@@ -34,6 +34,7 @@
 #'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
 #'                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
 #' @import dplyr
+#' @import progress
 #' @export
 
 ExportDunedinPACNI <- function(data,
@@ -41,8 +42,6 @@ ExportDunedinPACNI <- function(data,
                                missing_ROIs,
                                missing_gwr){
   
-  library(dplyr)
-
   # setting default settings
      
    if (missing(missing_ROIs)){
@@ -168,6 +167,9 @@ ExportDunedinPACNI <- function(data,
   # loop through participants and apply the weights to each person's brain features to yield an estimate of their PACNI score
   x<-1
   for (s in 1:nrow(data)){
+    pb <- progress_bar$new(format = "[:bar] Estimating DunedinPACNI in :current/:total (:percent), participants. eta: :eta", total = length(sublist))
+    pb$tick()
+    Sys.sleep(1 / 100)
     suppressWarnings({
       data$pacni[x] <- sum(as.numeric(data[s,])[1:c(ncol(data)-2)]*as.numeric(coefs)[2:length(coefs)], coefs[1], na.rm=T)
     })
