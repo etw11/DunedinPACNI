@@ -40,20 +40,17 @@ ExportDunedinPACNI <- function(data,
                                missing_ROIs,
                                missing_gwr){
 
+  library(dplyr)
+  
   # setting default settings
      
    if (missing(missing_ROIs)){
      missing_ROIs <- NULL
    }
   
-  
   if (missing(missing_gwr)){
     missing_gwr <- FALSE
   }
-
-  library(ggplot2)
-  library(gridExtra)
-  library(ggseg)
   
    # fix column names
    data_remove_cols <- !grepl("hypointensities_|non-WM-hypointensities_", colnames(data))

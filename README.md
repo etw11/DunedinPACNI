@@ -10,12 +10,14 @@ Using brain MRI scans from the Dunedin Study at age 45, we developed an algorith
 In our recent paper, we exported DunedinPACNI to three external neuroimaging samples (Human Connectome Project, Alzheimer's Disease Neuroimaging Initiative, and UK Biobank) to test the utility of DunedinPACNI in new data. We found that DunedinPACNI has excellent test-retest reliability, is associated with cognition, cognitive impairment, predicts cognitive decline, predicts hippocampal atrophy, predicts chronic disease onset, predicts death, and is associated with socioeconomic inequality.
 
 ## How to use this package
-To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. DunedinPACNI was developed using FreeSurfer v6.0, though the algorithm will work with other FreeSurfer versions. If you have .stats files output from FreeSurfer, this package will read in those files directly to R and format them appropriately.
+To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. DunedinPACNI was developed using FreeSurfer v6.0, though the algorithm will work with other FreeSurfer versions. If you have .stats files output from FreeSurfer, this package will read in those files directly to R, format them, and output DunedinPACNI scores.
 
 If you do not have .stats output from FreeSurfer, you will need to format your data in a .csv file to be read into R. Format this .csv file so that each row represents a unique scan
-and each column contains a FreeSurfer phenotype. You will need to match your column names to the naming conventions provided with the package. You can find these naming conventions using 'data(ROI_names)' after loading the DunedinPACNI package.
+and each column contains a FreeSurfer phenotype. You will need to exactly match your column names to the naming conventions provided with the package. You can find these naming conventions using `data(ROI_names)` after loading the DunedinPACNI package.
 
 You will also need a .csv files of all participant IDs.
+
+This package uses tools from the R packages `dplyr` and `progress`.
 
 # R package
 

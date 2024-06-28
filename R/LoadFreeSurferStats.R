@@ -23,17 +23,15 @@
 LoadFreeSurferStats <- function(fsdir, 
                                 sublistdir,
                                 missing_gwr){
+  
+  library(progress)
 
   # setting default settings
   if (missing(missing_gwr)){
     missing_gwr <- FALSE
   }
-
-  library(ggplot2)
-  library(gridExtra)
-  library(ggseg)
   
-  # find first participant label
+  # use first participant to make label
   
     sublist <- read.csv(paste0(sublistdir, 'sublist.csv'))$ID
     example_sub <- sublist[1]
@@ -89,7 +87,6 @@ LoadFreeSurferStats <- function(fsdir,
       labels <- cbind('ID', aseg_temp, surfarea_temp, thickavg_temp, grayvol_temp)[1,]
     }
     
-    # data <- data.frame(matrix(ncol=length(labels), nrow = 0))
     data <- data.frame(matrix(ncol=length(labels), nrow = length(sublist)))
     colnames(data) <- labels
     
@@ -102,7 +99,11 @@ LoadFreeSurferStats <- function(fsdir,
       lh_wgs <- vector(mode = 'list', length = length(sublist))
       rh_wgs <- vector(mode = 'list', length = length(sublist))
     }
+    # set up progress bar
+    pb <- progress_bar$new(format = "[:bar] Reading FreeSurfer file :current/:total (:percent), eta: :eta", total = length(sublist))
     for (sub in sublist){
+      pb$tick()
+      Sys.sleep(1 / 100)
       asegs[[x]] <- read.table(paste0(fsdir, sub, '/stats/aseg.stats'))
       lh_aparcs[[x]] <- read.table(paste0(fsdir, sub, '/stats/lh.aparc.stats'))
       rh_aparcs[[x]] <- read.table(paste0(fsdir, sub, '/stats/rh.aparc.stats'))
