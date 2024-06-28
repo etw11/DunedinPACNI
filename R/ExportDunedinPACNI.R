@@ -167,7 +167,7 @@ ExportDunedinPACNI <- function(data,
   # loop through participants and apply the weights to each person's brain features to yield an estimate of their PACNI score
   x<-1
   for (s in 1:nrow(data)){
-    pb <- progress_bar$new(format = "[:bar] Estimating DunedinPACNI in :current/:total (:percent), participants. eta: :eta", total = length(sublist))
+    pb <- progress_bar$new(format = "[:bar] Estimating DunedinPACNI in :current/:total (:percent), participants. eta: :eta", total = nrow(data))
     pb$tick()
     Sys.sleep(1 / 100)
     suppressWarnings({
