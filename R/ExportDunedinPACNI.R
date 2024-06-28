@@ -41,8 +41,6 @@ ExportDunedinPACNI <- function(data,
                                missing_ROIs,
                                missing_gwr){
 
-  library(dplyr)
-  
   # setting default settings
      
    if (missing(missing_ROIs)){
