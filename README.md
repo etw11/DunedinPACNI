@@ -19,7 +19,7 @@ You will also need a .csv files of all participant IDs.
 
 # R package
 
-**Installation**
+## Installation
 
 You can install and load the DunedinPACNI package using the following code:
 ```
@@ -29,7 +29,7 @@ library(DunedinPACNI)
 
 The R package for generating DunedinPACNI scores consists of two steps: LoadFreeSurferStats() and then ExportDunedinPACNI().
 
-**LoadFreeSurferStats**
+## LoadFreeSurferStats
 
 LoadFreeSurferStats() will directly read in a large number of .stats files to an R session and format them for the next step. If you have access to .stats files output from FreeSurfer, you can simply pass the path to those files to LoadFreeSurferStats() as shown below. You also need to pass the path of a .csv file with an ID list for your dataset.
 
@@ -42,11 +42,11 @@ This process may take a bit of time depending on the number of subjects you are 
 
 This function outputs a data.frame of formatted FreeSurfer phenotypes for all subjects.
 
-_What if I don't have .stats files from FreeSurfer?_
+**What if I don't have .stats files from FreeSurfer?**
 
 In this case, you should pre-format your FreeSurfer data into a .csv file with each row as a unique scan and each column as a FreeSurfer variable. The specific list of variables can be accessed using 'data(ROI_names)'. You must follow the exact naming conventions of 'ROI_names' or else the code will not be able to properly estimate DunedinPACNI.
 
-**ExportDunedinPACNI**
+## ExportDunedinPACNI
 
 ExportDunedinPACNI() applies the DunedinPACNI algorithm to your data and outputs DunedinPACNI scores for each scan. You can pass the output from LoadFreeSurferStats() directly to ExportDunedinPACNI().
 
