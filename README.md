@@ -12,7 +12,8 @@ In our recent paper, we exported DunedinPACNI to three external neuroimaging sam
 ## How to use this package
 To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. DunedinPACNI was developed using FreeSurfer v6.0, though the algorithm will work with other FreeSurfer versions. If you have .stats files output from FreeSurfer, this package will read in those files directly to R and format them appropriately.
 
-If you do not have .stats output from FreeSurfer, you will need to format your data in a .csv file to be read into R.
+If you do not have .stats output from FreeSurfer, you will need to format your data in a .csv file to be read into R. Format this .csv file so that each row represents a unique scan
+and each column contains a FreeSurfer phenotype. You will need to match your column names to the naming conventions provided with the package. You can find these naming conventions using 'data(ROI_names)' after loading the DunedinPACNI package.
 
 You will also need a .csv files of all participant IDs.
 
@@ -41,9 +42,14 @@ This process may take a bit of time depending on the number of subjects you are 
 
 This function outputs a data.frame of formatted FreeSurfer phenotypes for all subjects.
 
+## What if I don't have .stats files from FreeSurfer?
+In this case, you should pre-format your FreeSurfer data into a .csv file with each row as a unique scan and each column as a FreeSurfer variable. The specific list of variables can be accessed using 'data(ROI_names)'. You must follow the exact naming conventions of 'ROI_names' or else the code will not be able to properly estimate DunedinPACNI.
+
 **ExportDunedinPACNI**
 
 ExportDunedinPACNI() applies the DunedinPACNI algorithm to your data and outputs DunedinPACNI scores for each scan. You can pass the output from LoadFreeSurferStats() directly to ExportDunedinPACNI().
+
+If you don't have access to FreeSurfer .stats files, you can pass a properly formatted .csv file (see above) directly to ExportDunedinPACNI() instead.
 
 If you are missing any ROIs in your data, you should pass a list of those ROIs to ExportDunedinPACNI() to have them imputed using the mean value from the Dunedin Study. Each missing ROI will slightly reduce the accuracy of resulting DunedinPACNI scores. Because the same value is being imputed for all subjects, imputed ROIs should have a uniform effect on DunedinPACNI scores in your sample, to preserve within-group comparisons. If you are missing >20% of the ROIs included in the DunedinPACNI algorithm, we think that is too much missingness to estimate DunedinPACNI and this function will throw an error.
 
