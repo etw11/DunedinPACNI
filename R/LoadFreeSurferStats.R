@@ -19,7 +19,6 @@
 #' LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/',
 #'                     sublistdir = '/Users/ew198/Documents/brainpace/data/')
 #' @import progress
-#' @import ggseg
 #' @export
 
 LoadFreeSurferStats <- function(fsdir, 
@@ -38,45 +37,45 @@ LoadFreeSurferStats <- function(fsdir,
     
     # load and format data from freesurfer to set up empty object for everyone
     
-    aseg <- read_freesurfer_stats(paste0(fsdir, example_sub, '/stats/aseg.stats'))
-    lh_aparc <- read_freesurfer_stats(paste0(fsdir, example_sub, '/stats/lh.aparc.stats'))
-    rh_aparc <- read_freesurfer_stats(paste0(fsdir, example_sub, '/stats/rh.aparc.stats'))
+    aseg <- read.table(paste0(fsdir, example_sub, '/stats/aseg.stats'))
+    lh_aparc <- read.table(paste0(fsdir, example_sub, '/stats/lh.aparc.stats'))
+    rh_aparc <- read.table(paste0(fsdir, example_sub, '/stats/rh.aparc.stats'))
     if (missing_gwr == FALSE){
-      lh_wg <- read_freesurfer_stats(paste0(fsdir, example_sub, '/stats/lh.w-g.pct.stats'))
-      rh_wg <- read_freesurfer_stats(paste0(fsdir, example_sub, '/stats/rh.w-g.pct.stats'))
+      lh_wg <- read.table(paste0(fsdir, example_sub, '/stats/lh.w-g.pct.stats'))
+      rh_wg <- read.table(paste0(fsdir, example_sub, '/stats/rh.w-g.pct.stats'))
     }
 
     # label hemispheres
     
-    lh_aparc$label <- paste0(lh_aparc$label, '_left')
-    rh_aparc$label <- paste0(rh_aparc$label, '_right')
+    lh_aparc$label <- paste0(lh_aparc$V1, '_left')
+    rh_aparc$label <- paste0(rh_aparc$V1, '_right')
     if (missing_gwr == FALSE){
-      lh_wg$label <- paste0(lh_wg$label, '_left')
-      rh_wg$label <- paste0(rh_wg$label, '_right')
+      lh_wg$label <- paste0(lh_wg$V5, '_left')
+      rh_wg$label <- paste0(rh_wg$V5, '_right')
     }
 
     # label phenotypes 
-    aseg_temp <- t(aseg[,c('label', 'Volume_mm3')])
+    aseg_temp <- t(aseg[,c('V5', 'V6')])
     aseg_temp[1,] <- gsub("^(Right|Left)-(.*)$", "\\2_\\1", aseg_temp[1,])
     aseg_temp[1,] <- gsub("3rd-Ventricle", "X3rd.Ventricle", aseg_temp[1,])
     aseg_temp[1,] <- gsub("4th-Ventricle", "X4th.Ventricle", aseg_temp[1,])
     aseg_temp[1,] <- gsub("5th-Ventricle", "X5th.Ventricle", aseg_temp[1,])
     
-    surfarea_temp <- cbind(t(lh_aparc[,c('label', 'SurfArea')]),
-                           t(rh_aparc[,c('label', 'SurfArea')]))
+    surfarea_temp <- cbind(t(lh_aparc[,c('label', 'V3')]),
+                           t(rh_aparc[,c('label', 'V3')]))
     surfarea_temp[1,] <- paste0('SA_',surfarea_temp[1,])
     
-    thickavg_temp <-  cbind(t(lh_aparc[,c('label', 'ThickAvg')]),
-                            t(rh_aparc[,c('label', 'ThickAvg')]))
+    thickavg_temp <-  cbind(t(lh_aparc[,c('label', 'V5')]),
+                            t(rh_aparc[,c('label', 'V5')]))
     thickavg_temp[1,] <- paste0('CT_',thickavg_temp[1,])
     
-    grayvol_temp <-  cbind(t(lh_aparc[,c('label', 'GrayVol')]),
-                           t(rh_aparc[,c('label', 'GrayVol')]))
+    grayvol_temp <-  cbind(t(lh_aparc[,c('label', 'V4')]),
+                           t(rh_aparc[,c('label', 'V4')]))
     grayvol_temp[1,] <- paste0('GMV_',grayvol_temp[1,])
     
     if (missing_gwr == FALSE){
-      wg_temp <-  cbind(t(lh_wg[,c('label', 'Mean')]),
-                      t(rh_wg[,c('label', 'Mean')]))
+      wg_temp <-  cbind(t(lh_wg[,c('label', 'V6')]),
+                      t(rh_wg[,c('label', 'V6')]))
       wg_temp[1,] <- paste0('GWR_',wg_temp[1,])
     }
 
@@ -113,6 +112,8 @@ LoadFreeSurferStats <- function(fsdir,
       }
       x <- x+1
     }
+    
+    print('Formatting data...')
     
     # load labels
     aseg_txt <- readLines(file(paste0(fsdir, sub, '/stats/aseg.stats')))
@@ -197,7 +198,7 @@ LoadFreeSurferStats <- function(fsdir,
     }
   
   # check for missing data
-  
+    
   if (sum(colSums(is.na(data))[colSums(is.na(data)) != 0]) == 0){
     print('Looks like you have no missing data. Great!')
   } else if (sum(colSums(is.na(data))[colSums(is.na(data)) != 0]) > 0){
