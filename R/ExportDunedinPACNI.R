@@ -33,7 +33,6 @@
 #' ExportDunedinPACNI(data = df,
 #'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
 #'                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
-#' @import dplyr
 #' @import progress
 #' @export
 
@@ -76,7 +75,7 @@ ExportDunedinPACNI <- function(data,
     # fix punctuation
     names(dunedin_dk_gwr_means) <- gsub("[-.]", "", names(dunedin_dk_gwr_means))
     
-    ROIs_to_impute <- dunedin_dk_gwr_means[which(names(dunedin_dk_gwr_means) %in% missing_ROIs)]
+    ROIs_to_impute <- dunedin_dk_gwr_means[which(match(names(dunedin_dk_gwr_means), missing_ROIs, nomatch = 0) > 0)]
     ROIs_to_impute_df <- t(data.frame(ROIs_to_impute))
     ROIs_to_impute_rep <- ROIs_to_impute_df[rep(seq_len(nrow(ROIs_to_impute_df)), nrow(data)), ]
     rownames(ROIs_to_impute_rep) <- NULL

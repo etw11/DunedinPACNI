@@ -2,5 +2,4 @@
 
 export(ExportDunedinPACNI)
 export(LoadFreeSurferStats)
-import(dplyr)
 import(progress)
