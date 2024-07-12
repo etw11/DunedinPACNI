@@ -40,6 +40,10 @@ LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/',
                     sublistdir = '/Users/ew198/Documents/data/')
 ```
 
+Where `fsdir` should be the path to the directory where all FreeSurfer .stats files are stored. This is likely also your FreeSurfer "subjects dir". 
+
+`sublistdir` should be the path to the directory where a .csv file with all the subject IDs you want to estimate DunedinPACNI scores for. This .csv file should have one column with 'ID' as the header/first entry.
+
 This process may take a bit of time depending on the number of subjects you are reading in. For example, loading ~40,000 UK Biobank scans takes around 1 hour.
 
 This function outputs a data.frame of formatted FreeSurfer phenotypes for all subjects.
@@ -69,7 +73,7 @@ ExportDunedinPACNI(data = df,
                    modeldir = '/Users/ew198/Documents/data/model/',
                    outdir = '/Users/ew198/Documents/results/',
                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'),
-                   imputedir = '/Users/ew198/Documents/data/impute'))
+                   imputedir = '/Users/ew198/Documents/data/impute')
 ```
 
 

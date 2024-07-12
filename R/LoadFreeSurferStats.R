@@ -3,11 +3,11 @@
 #' This function is used to quickly read and format FreeSurfer .stats files to R. 
 #' 
 #' Written by Ethan Whitman (ethan.whitman@duke.edu)
-#' @param fsdir character string of the directory where FreeSurfer output files are stored. This directory should contain
-#'     the full sample of sub-* directories that contain the stats/ directories.
+#' @param fsdir character string of the directory path where FreeSurfer output files are stored. This directory should contain
+#'     the full sample of sub-* directories that contain the stats/ directories. This is likely your FreeSurfer "subjects dir".
 #'
-#' @param sublistdir character string of the directory where a .csv file of the participant ID list can be found. Participant ID list should
-#'     be saved as 'sublist.csv'.
+#' @param sublistdir character string of the directory path where a .csv file of the participant ID list can be found. Participant ID list should
+#'     be saved as 'sublist.csv'. This file should have one column with the header/first entry as "ID".
 #'     
 #' @param missing_gwr (optional) TRUE/FALSE as to whether gray-white signal intensity ratio phenotypes are unavailable. Default is FALSE.
 #' 
@@ -28,6 +28,14 @@ LoadFreeSurferStats <- function(fsdir,
   # setting default settings
   if (missing(missing_gwr)){
     missing_gwr <- FALSE
+  }
+  
+  # add missing "/" to paths just in case
+  if (substring(fsdir,nchar(fsdir)) != "/"){
+    fsdir <- paste0(fsdir, "/")
+  }
+  if (substring(sublistdir,nchar(sublistdir)) != "/"){
+    sublistdir <- paste0(sublistdir, "/")
   }
   
   # use first participant to make label

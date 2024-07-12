@@ -27,7 +27,6 @@
 #'       <outdir>/<date and time>_df_pacni.Rdata
 #' @examples 
 #' ExportDunedinPACNI(data = df,
-#'                    modeldir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
 #'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/')
 #' 
 #' ExportDunedinPACNI(data = df,
@@ -49,6 +48,11 @@ ExportDunedinPACNI <- function(data,
   
   if (missing(missing_gwr)){
     missing_gwr <- FALSE
+  }
+  
+  # add missing "/" to paths just in case
+  if (substring(outdir,nchar(outdir)) != "/"){
+    outdir <- paste0(outdir, "/")
   }
   
    # fix column names

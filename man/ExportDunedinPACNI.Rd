@@ -36,7 +36,6 @@ Written by Ethan Whitman (ethan.whitman@duke.edu)
 }
 \examples{
 ExportDunedinPACNI(data = df,
-                   modeldir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/')
 
 ExportDunedinPACNI(data = df,

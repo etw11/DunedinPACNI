@@ -7,11 +7,11 @@
 LoadFreeSurferStats(fsdir, sublistdir, missing_gwr)
 }
 \arguments{
-\item{fsdir}{character string of the directory where FreeSurfer output files are stored. This directory should contain
-the full sample of sub-* directories that contain the stats/ directories.}
+\item{fsdir}{character string of the directory path where FreeSurfer output files are stored. This directory should contain
+the full sample of sub-* directories that contain the stats/ directories. This is likely your FreeSurfer "subjects dir".}
 
-\item{sublistdir}{character string of the directory where a .csv file of the participant ID list can be found. Participant ID list should
-be saved as 'sublist.csv'.}
+\item{sublistdir}{character string of the directory path where a .csv file of the participant ID list can be found. Participant ID list should
+be saved as 'sublist.csv'. This file should have one column with the header/first entry as "ID".}
 
 \item{missing_gwr}{(optional) TRUE/FALSE as to whether gray-white signal intensity ratio phenotypes are unavailable. Default is FALSE.}
 }
