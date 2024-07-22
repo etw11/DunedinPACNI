@@ -29,7 +29,7 @@ library(DunedinPACNI)
 
 The R package for generating DunedinPACNI scores consists of two steps: LoadFreeSurferStats() and then ExportDunedinPACNI().
 
-This package uses tools from the R package `progress`.
+This package was built using R version 4.3.2 and uses tools from the R package `progress` (version 1.2.3).
 
 ## LoadFreeSurferStats
 
