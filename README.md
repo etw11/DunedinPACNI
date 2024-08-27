@@ -21,8 +21,9 @@ You will also need a .csv files of all participant IDs.
 
 ## Installation
 
-You can install and load the DunedinPACNI package using the following code:
+You can use `devtools` to install and load the DunedinPACNI package using the following code:
 ```
+install.packages("devtools")
 devtools::install_github("etw11/DunedinPACNI")
 library(DunedinPACNI)
 ```
@@ -63,14 +64,12 @@ If you are missing any ROIs in your data, you should pass a list of those ROIs t
 Example without missing ROIs (default):
 ```
 ExportDunedinPACNI(data = df,
-                   modeldir = '/Users/ew198/Documents/data/model/',
                    outdir = '/Users/ew198/Documents/results/')
 ```
 
 Example with missing ROIs:
 ```
 ExportDunedinPACNI(data = df,
-                   modeldir = '/Users/ew198/Documents/data/model/',
                    outdir = '/Users/ew198/Documents/results/',
                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'),
                    imputedir = '/Users/ew198/Documents/data/impute')

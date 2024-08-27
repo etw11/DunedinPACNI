@@ -6,23 +6,21 @@
 #' @param fsdir character string of the directory path where FreeSurfer output files are stored. This directory should contain
 #'     the full sample of sub-* directories that contain the stats/ directories. This is likely your FreeSurfer "subjects dir".
 #'
-#' @param sublistdir character string of the directory path where a .csv file of the participant ID list can be found. Participant ID list should
-#'     be saved as 'sublist.csv'. This file should have one column with the header/first entry as "ID".
+#' @param sublist path to a .csv file of the participant ID list. This file should have one column with the header/first entry as "ID".
 #'     
 #' @param missing_gwr (optional) TRUE/FALSE as to whether gray-white signal intensity ratio phenotypes are unavailable. Default is FALSE.
 #' 
 #' @return The output of this function will be a data.frame with the output of the entire sample's .stats files. Each row
 #'     will have a unique participant and each column will have a different morphometric estimate.
 #'
-#'
 #' @examples 
 #' LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/',
-#'                     sublistdir = '/Users/ew198/Documents/brainpace/data/')
+#'                     sublist = '/Users/ew198/Documents/brainpace/data/sublist.csv')
 #' @import progress
 #' @export
 
 LoadFreeSurferStats <- function(fsdir, 
-                                sublistdir,
+                                sublist,
                                 missing_gwr){
   
   # setting default settings
@@ -34,14 +32,11 @@ LoadFreeSurferStats <- function(fsdir,
   if (substring(fsdir,nchar(fsdir)) != "/"){
     fsdir <- paste0(fsdir, "/")
   }
-  if (substring(sublistdir,nchar(sublistdir)) != "/"){
-    sublistdir <- paste0(sublistdir, "/")
-  }
   
   # use first participant to make label
   
-    sublist <- read.csv(paste0(sublistdir, 'sublist.csv'))$ID
-    example_sub <- sublist[1]
+    idlist <- read.csv(paste0(sublist))$ID
+    example_sub <- idlist[1]
     
     # load and format data from freesurfer to set up empty object for everyone
     
@@ -94,21 +89,21 @@ LoadFreeSurferStats <- function(fsdir,
       labels <- cbind('ID', aseg_temp, surfarea_temp, thickavg_temp, grayvol_temp)[1,]
     }
     
-    data <- data.frame(matrix(ncol=length(labels), nrow = length(sublist)))
+    data <- data.frame(matrix(ncol=length(labels), nrow = length(idlist)))
     colnames(data) <- labels
     
     # load everyone at once
     x <- 1
-    asegs <- vector(mode = 'list', length = length(sublist))
-    lh_aparcs <- vector(mode = 'list', length = length(sublist))
-    rh_aparcs <- vector(mode = 'list', length = length(sublist))
+    asegs <- vector(mode = 'list', length = length(idlist))
+    lh_aparcs <- vector(mode = 'list', length = length(idlist))
+    rh_aparcs <- vector(mode = 'list', length = length(idlist))
     if (missing_gwr == FALSE){
-      lh_wgs <- vector(mode = 'list', length = length(sublist))
-      rh_wgs <- vector(mode = 'list', length = length(sublist))
+      lh_wgs <- vector(mode = 'list', length = length(idlist))
+      rh_wgs <- vector(mode = 'list', length = length(idlist))
     }
     # set up progress bar
-    pb <- progress_bar$new(format = "[:bar] Reading FreeSurfer file :current/:total (:percent), eta: :eta", total = length(sublist))
-    for (sub in sublist){
+    pb <- progress_bar$new(format = "[:bar] Reading FreeSurfer file :current/:total (:percent), eta: :eta", total = length(idlist))
+    for (sub in idlist){
       pb$tick()
       Sys.sleep(1 / 100)
       asegs[[x]] <- read.table(paste0(fsdir, sub, '/stats/aseg.stats'))
@@ -139,7 +134,7 @@ LoadFreeSurferStats <- function(fsdir,
     
     # rename 
     y <- 1
-    for (sub in sublist){
+    for (sub in idlist){
       aseg <- asegs[[y]]
       colnames(aseg) <- aseg_colheaders[3:length(aseg_colheaders)]
       
@@ -201,8 +196,14 @@ LoadFreeSurferStats <- function(fsdir,
       colnames(data_temp) <- data_temp[1,]
       rownames(data_temp) <- c('label', 'value')
       
-      data[y,] <- data_temp[2,]
+      if (ncol(data_temp) == ncol(data)){
+        data[y,] <- data_temp[2,]
+      } else if (ncol(data_temp) < ncol(data)){
+        data[y,] <- c(sub, rep(NA, 319))
+        print(paste0('sub ', paste0(sub), ' missing some ROIs'))
+      }
       y <- y+1
+      
     }
   
   # check for missing data

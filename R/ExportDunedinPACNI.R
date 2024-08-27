@@ -182,7 +182,7 @@ ExportDunedinPACNI <- function(data,
   
   # save out
   outname <- paste0(gsub(" ", "_", gsub(":","_",date())), "_", round(runif(1,100,999),0))
-  save(df_pacni, file = paste0(outdir, outname, '_df_pacni', '.Rdata'))
+  write.csv(df_pacni, file = paste0(outdir, outname, '_df_pacni', '.csv'))
   
   return(df_pacni)
 }
