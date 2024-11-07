@@ -35,10 +35,14 @@ LoadFreeSurferStats <- function(fsdir,
     fsdir <- paste0(fsdir, "/")
   }
   
-  # use first participant to make label
+  # load ID list and remove trailing "/" if there is one
+  idlist <- read.csv(paste0(sublist))$ID
+  if ("/" %in% substring(idlist,nchar(idlist))){
+    idlist <- gsub("/", "", idlist)
+  }
   
-    idlist <- read.csv(paste0(sublist))$ID
-    example_sub <- idlist[1]
+  # use first participant to make label
+  example_sub <- idlist[1]
     
     # load and format data from freesurfer to set up empty object for everyone
     

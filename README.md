@@ -37,8 +37,8 @@ library(DunedinPACNI)
 Next, you need to generate a CSV file with all participant IDs that you want to calculate DunedinPACNI scores for. To do this, you could navigate to your FreeSurfer subjects directory and run the following commands into the command line:
 
 ```
-echo 'ID' >> sublist.csv
-ls -d */ > sublist.csv
+echo 'ID' > sublist.csv
+ls -d */ >> sublist.csv
 ```
 
 The resulting `sublist.csv` file should look something like this:
