@@ -3,6 +3,7 @@
 #' This function is used to quickly read and format FreeSurfer .stats files to R. 
 #' 
 #' Written by Ethan Whitman (ethan.whitman@duke.edu)
+#' 
 #' @param fsdir character string of the path to your FreeSurfer subjects directory. This folder should contain
 #'     each participant's subdirectory that contains their FreeSurfer output. Specifically, this function will read in files in the
 #'     <subject>/stats/ subdirectory.

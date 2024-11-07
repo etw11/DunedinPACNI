@@ -21,7 +21,6 @@
 #'
 #'     This command will throw an error if you are missing more than >20 percent of the ROIs needed for the DunedinPACNI algorithm
 #' 
-#'    
 #' @return The output of this function will be a data.frame with DunedinPACNI scores for your dataset. This function will also automatically save this object to an .Rdata file labeled:
 #' 
 #'       <outdir>/<date and time>_df_pacni.Rdata
