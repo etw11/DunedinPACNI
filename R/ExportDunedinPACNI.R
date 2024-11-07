@@ -1,6 +1,6 @@
 #' ExportDunedinPACNI
 #'
-#' This function is used to estimate DunedinPACNI scores from FreeSurfer output.
+#' This function is used to estimate DunedinPACNI scores from FreeSurfer outputs.
 #' 
 #' Written by Ethan Whitman (ethan.whitman@duke.edu)
 #'  

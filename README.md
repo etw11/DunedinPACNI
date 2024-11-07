@@ -7,72 +7,141 @@ The DunedinPACNI algorithm was designed to predict the longitudinal [Pace of Agi
 Using brain MRI scans from the Dunedin Study at age 45, we developed an algorithm to accurately estimate the Pace of Aging phenotype among Dunedin Study members. Specifically, the algorithm uses FreeSurfer-derived measures of cortical thickness, cortical surface area, cortical gray matter volume, cortical gray-white signal intensity ratio all according to the Desikan-Killiany parcellation and subcortical and cerebellar volumes according to the FreeSurfer ASEG output.
 
 ## How do we know DunedinPACNI works?
-In our recent paper, we exported DunedinPACNI to three external neuroimaging samples (Human Connectome Project, Alzheimer's Disease Neuroimaging Initiative, and UK Biobank) to test the utility of DunedinPACNI in new data. We found that DunedinPACNI has excellent test-retest reliability, is associated with cognition, cognitive impairment, predicts cognitive decline, predicts hippocampal atrophy, predicts chronic disease onset, predicts death, and is associated with socioeconomic inequality.
+In our recent paper, we exported DunedinPACNI to three external neuroimaging samples (Human Connectome Project, Alzheimer's Disease Neuroimaging Initiative, UK Biobank, and BrainLat) to test the utility of DunedinPACNI in new data. We found that DunedinPACNI has excellent test-retest reliability, is associated with cognition, cognitive impairment, predicts cognitive decline, predicts hippocampal atrophy, predicts chronic disease onset, predicts death, is associated with socioeconomic inequality, and generalizes well in Latin American dementia patients.
 
-## How to use this package
-To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. DunedinPACNI was developed using FreeSurfer v6.0, though the algorithm will work with other FreeSurfer versions. If you have .stats files output from FreeSurfer, this package will read in those files directly to R, format them, and output DunedinPACNI scores.
+The details of these results can be found in [our preprint](https://www.biorxiv.org/content/10.1101/2024.08.19.608305v1).
 
-If you do not have .stats output from FreeSurfer, you will need to format your data in a .csv file to be read into R. Format this .csv file so that each row represents a unique scan
-and each column contains a FreeSurfer phenotype. You will need to exactly match your column names to the naming conventions provided with the package. You can find these naming conventions using `data(ROI_names)` after loading the DunedinPACNI package.
+## What do I need to estimate DunedinPACNI?
+To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. DunedinPACNI was developed using FreeSurfer v6.0, though the algorithm will work with other FreeSurfer versions.
 
-You will also need a .csv files of all participant IDs.
+You also need a CSV file with all participant IDs. 
 
-# R package
+# How can I estimate DunedinPACNI?
+Below, we provide instructions for estimating DunedinPACNI in two potential scenarios: 1. you have access to complete `recon-all` output from FreeSurfer, likely because you ran FreeSurfer yourself, and 2. you have access to FreeSurfer measures, but you do not have access to the complete FreeSurfer `recon-all` output. This would likely be because you downloaded FreeSurfer outputs from an open dataset such as ADNI or UK Biobank and have data formatted in a CSV file, or something similar.
 
-## Installation
+You can estimate DunedinPACNI in both cases, but the steps are slightly different.
 
-You can use `devtools` to install and load the DunedinPACNI package using the following code:
+# Option 1 - you have access to complete FreeSurfer recon-all outputs for your dataset
+
+### Step 1 - installation
+First, start by using `devtools` to install and load the DunedinPACNI package using the following code:
 ```
 install.packages("devtools")
 devtools::install_github("etw11/DunedinPACNI")
 library(DunedinPACNI)
 ```
 
-The R package for generating DunedinPACNI scores consists of two steps: LoadFreeSurferStats() and then ExportDunedinPACNI().
-
-This package was built using R version 4.3.2 and uses tools from the R package `progress` (version 1.2.3).
-
-## LoadFreeSurferStats
-
-LoadFreeSurferStats() will directly read in a large number of .stats files to an R session and format them for the next step. If you have access to .stats files output from FreeSurfer, you can simply pass the path to those files to LoadFreeSurferStats() as shown below. You also need to pass the path of a .csv file with an ID list for your dataset.
+### Step 2 - participant list
+Next, you need to generate a CSV file with all participant IDs that you want to calculate DunedinPACNI scores for. To do this, you could navigate to your FreeSurfer subjects directory and run the following bash commands:
 
 ```
-LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/',
-                    sublistdir = '/Users/ew198/Documents/data/')
+echo 'ID' >> sublist.csv
+ls -d */ > sublist.csv
 ```
 
-Where `fsdir` should be the path to the directory where all FreeSurfer .stats files are stored. This is likely also your FreeSurfer "subjects dir". 
+The resulting `sublist.csv` file should look something like this:
+```
+ID
+<subject 1 ID>
+<subject 2 ID>
+<subject 3 ID>
+...
+<subject N ID>
+```
 
-`sublistdir` should be the path to the directory where a .csv file with all the subject IDs you want to estimate DunedinPACNI scores for. This .csv file should have one column with 'ID' as the header/first entry.
+### Step 3 - load data into R
+Next, you can run the function `LoadFreeSurferStats` to quickly read the necessary FreeSurfer data into R.
+```
+df <- LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/', 
+                        sublist = '/Users/ew198/Documents/data/sublist.csv')
+```
+Where `fsdir` should be the path to your FreeSurfer subjects directory and `sublist` is the path to the CSV file with all participant IDs.
 
 This process may take a bit of time depending on the number of subjects you are reading in. For example, loading ~40,000 UK Biobank scans takes around 1 hour.
 
-This function outputs a data.frame of formatted FreeSurfer phenotypes for all subjects.
+This function outputs a data frame of formatted FreeSurfer phenotypes for all subjects.
 
-**What if I don't have .stats files from FreeSurfer?**
+`LoadFreeSurferStats` will throw a warning and summarize if there is any missing data.
 
-In this case, you should pre-format your FreeSurfer data into a .csv file with each row as a unique scan and each column as a FreeSurfer variable. The specific list of variables can be accessed using 'data(ROI_names)'. You must follow the exact naming conventions of 'ROI_names' or else the code will not be able to properly estimate DunedinPACNI.
+### Step 4 - estimate DunedinPACNI
+Next, you can pass the output from `LoadFreeSurferStats` directly to `ExportDunedinPACNI`.
 
-## ExportDunedinPACNI
-
-ExportDunedinPACNI() applies the DunedinPACNI algorithm to your data and outputs DunedinPACNI scores for each scan. You can pass the output from LoadFreeSurferStats() directly to ExportDunedinPACNI().
-
-If you don't have access to FreeSurfer .stats files, you can pass a properly formatted .csv file (see above) directly to ExportDunedinPACNI() instead.
-
-If you are missing any ROIs in your data, you should pass a list of those ROIs to ExportDunedinPACNI() to have them imputed using the mean value from the Dunedin Study. Each missing ROI will slightly reduce the accuracy of resulting DunedinPACNI scores. Because the same value is being imputed for all subjects, imputed ROIs should have a uniform effect on DunedinPACNI scores in your sample, to preserve within-group comparisons. If you are missing >20% of the ROIs included in the DunedinPACNI algorithm, we think that is too much missingness to estimate DunedinPACNI and this function will throw an error.
-
-Example without missing ROIs (default):
 ```
-ExportDunedinPACNI(data = df,
-                   outdir = '/Users/ew198/Documents/results/')
+df_pacni <- ExportDunedinPACNI(data = df, outdir = '/Users/ew198/Documents/results/')
+```
+Where `data` is the output from `LoadFreeSurferStats` and `outdir` is the path to the directory where you want to save DunedinPACNI outputs.
+
+
+# Option 2 - you do not have complete recon-all FreeSurfer outputs from your dataset
+
+### Step 1 - installation
+First, start by using `devtools` to install and load the DunedinPACNI package using the following code:
+```
+install.packages("devtools")
+devtools::install_github("etw11/DunedinPACNI")
+library(DunedinPACNI)
 ```
 
-Example with missing ROIs:
+### Step 2 - formatting data
+Next, you will need to format your data into a CSV file with particular formatting. Specifically, you need to have each row in your CSV file represent a unique scan, and each column with a uniquephenotype.
+
+To get a template for this file, run the following commands in R:
+```
+data(ROI_names)
+write.csv(data.frame(ROI_names), file = '/Users/ew198/Documents/data/data_file.csv', row.names = FALSE)
+```
+This command will output a template CSV file called `data_file.csv` to the specified directory. You'll need to format your data into a CSV file that matches this column order and exactly matches these column names. It could be helpful to use the `ROI_names` object in R fordata manipulation. `ROI_names` contains the correct naming conventions for each phenotype and is in the correct order. It is loaded automatically when you install the `DunedinPACNI` package.
+
+**Note** - If you downloaded FreeSurfer data from an open dataset (e.g. ADNI) you may not have access to gray-white signal intensity ratio measures, as these are not always distributed. If so, see below for now to run this package without gray-white signal intensity ratio.
+
+### Step 3 - estimate DunedinPACNI
+Once your data is formatted into a CSV with correct order and naming conventions, you can load this CSV into R and run `ExportDunedinPACNI`.
+```
+df <- read.csv('/Users/ew198/Documents/data/data_file.csv')
+df_pacni <- ExportDunedinPACNI(data = df, 
+                                outdir = '/Users/ew198/Documents/results/')
+```
+Where `outdir` is the path to the directory where you want to save DunedinPACNI outputs.
+
+# Notes
+
+### What if I am missing gray-white signal intensity ratio measures?
+DunedinPACNI is valid with or without gray-white signal intensity ratio measures. You can choose which version you want to use based on your data availability and preferences.
+
+To estimate DunedinPACNI without gray-white signal intensity ratio, simly set the `gwr_missing` option to `TRUE` for both `LoadFreeSurferStats` and/or `ExportDuinedinPACNI`. For example, if you are reading FreeSurfer data from the full `recon-all` output, run:
+```
+df <- LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/', 
+                        sublist = '/Users/ew198/Documents/data/sublist.csv',
+                        missing_gwr = TRUE)
+```
+
+Same for `ExportDunedinPACNI`:
+```
+df_pacni <- ExportDunedinPACNI(data = df, 
+                                outdir = '/Users/ew198/Documents/results/', 
+                                missing_gwr = TRUE)
+```
+
+### What if I am missing estimates for some ROIs?
+You may have missing data from certain ROIs because of low data quality or lack of availabiliy. If so, we allow users to impute the average score from the Dunedin Study MRI dataset. Each missing ROI will slightly reduce the accuracy of resulting DunedinPACNI scores. Because the same value is being imputed for all subjects, imputed ROIs should have a uniform effect on DunedinPACNI scores in your sample, to avoid affecting within-group comparisons. If you are missing >20% of the ROIs included in the DunedinPACNI algorithm, we think that is too much missingness to estimate DunedinPACNI and `ExportDunedinPACNI` will throw an error.
+
+To run `ExportDunedinPACNI` with missing ROIs, first make sure columns for those phenotypes are removed from the data frame being passed to `ExportDunedinPACNI`. 
+
+Next, find the naming convention for the missing ROIs using `ROI_names`. To check this, run these commands:
+```
+data(ROI_names)
+ROI_names
+```
+This will output the naming covnentions for all ROIs.
+
+Next, run  `ExportDunedinPACNI` while setting the option `missing_ROIs` to a text vector of the missing ROI names. In the following example, `ExportDunedinPACNI` would impute values for right pars operularis gray-white signal intensity ratio and right pars orbitalis gray-white signal intensity ratio.
 ```
 ExportDunedinPACNI(data = df,
                    outdir = '/Users/ew198/Documents/results/',
-                   missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'),
-                   imputedir = '/Users/ew198/Documents/data/impute')
+                   missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
 ```
 
+If you have missing ROIs, this may affect the accuracy of DunedinPACNI scores in your dataset. `ExportDunedinPACNI` will throw a warning with the percentage of ROIs that are missing from the final DunedinPACNI algorithm. Many ROI values are set to 0 during training and are not included in estimating DunedinPACNI, so the degree to which missingness affects the DunedinPACNI scores may be different from the overall amount of missingness in your data.
 
+
+This package was built using R version 4.3.2 and uses tools from the R package `progress` (version 1.2.3).
