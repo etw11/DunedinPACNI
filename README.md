@@ -23,7 +23,7 @@ Below, we provide instructions for estimating DunedinPACNI in two potential scen
 
 You can estimate DunedinPACNI in both cases, but the steps are slightly different.
 
-# Steps if you have access to complete FreeSurfer recon-all outputs for your dataset
+# Steps if you have complete FreeSurfer recon-all outputs for your dataset
 
 ### Step 1 - installation
 First, start by using `devtools` to install and load the DunedinPACNI package using the following code:
@@ -95,7 +95,7 @@ write.csv(data.frame(ROI_names), file = '<YOUR WORKING DIRECTORY>/data_file.csv'
 ```
 This command will output a template CSV file called `data_file.csv` to the specified directory. You'll need to format your data to match this column order and these column names. It might be helpful to use the `ROI_names` object in R for data warngling. `ROI_names` contains the correct naming conventions for each phenotype and is in the correct order. It is loaded automatically when you install the `DunedinPACNI` package.
 
-**Note** - If you downloaded FreeSurfer data from an open dataset (e.g. ADNI) you may not have access to gray-white signal intensity ratio measures, as these are not always distributed. If so, see below for now to run this package without gray-white signal intensity ratio (section **What if I am missing gray-white signal intensity ratio measures?**).
+**Note** - If you downloaded FreeSurfer data from an open dataset (e.g. ADNI) you may not have access to gray-white signal intensity ratio measures, as these are not always distributed. If so, see below for now to run this package without gray-white signal intensity ratio (section __What if I am missing gray-white signal intensity ratio measures?__).
 
 ### Step 3 - estimate DunedinPACNI
 Once your data is formatted into a CSV with correct order and names, you can load this CSV into R and run `ExportDunedinPACNI`.
