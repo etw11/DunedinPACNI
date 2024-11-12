@@ -229,7 +229,7 @@ LoadFreeSurferStats <- function(fsdir,
     DunedinPACNI estimates.\033[0m\n")
   }
   
-  data <- data %>% mutate_at(c(2:320), as.numeric)
+  data[,c(2:ncol(data))] <- data.frame(apply(data[,c(2:ncol(data))], 2, function(x) as.numeric(x)))
   return(data)
  
 }

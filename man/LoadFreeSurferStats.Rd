@@ -4,20 +4,21 @@
 \alias{LoadFreeSurferStats}
 \title{LoadFreeSurferStats}
 \usage{
-LoadFreeSurferStats(fsdir, sublistdir, missing_gwr)
+LoadFreeSurferStats(fsdir, sublist, missing_gwr)
 }
 \arguments{
-\item{fsdir}{character string of the directory path where FreeSurfer output files are stored. This directory should contain
-the full sample of sub-* directories that contain the stats/ directories. This is likely your FreeSurfer "subjects dir".}
+\item{fsdir}{character string of the path to your FreeSurfer subjects directory. This folder should contain
+each participant's subdirectory that contains their FreeSurfer output. Specifically, this function will read in files in the
+<subject>/stats/ subdirectory.}
 
-\item{sublistdir}{character string of the directory path where a .csv file of the participant ID list can be found. Participant ID list should
-be saved as 'sublist.csv'. This file should have one column with the header/first entry as "ID".}
+\item{sublist}{path and name of a .csv file with the participant ID list. This file should have one column with the header/first entry as "ID" and following
+entries with each participant ID, matching the format from the FreeSurfer subjects directory.}
 
 \item{missing_gwr}{(optional) TRUE/FALSE as to whether gray-white signal intensity ratio phenotypes are unavailable. Default is FALSE.}
 }
 \value{
-The output of this function will be a data.frame with the output of the entire sample's .stats files. Each row
-    will have a unique participant and each column will have a different morphometric estimate.
+The output of this function will be a data frame with regional FreeSurfer measures for each participant. Each row
+    will have a unique participant and each column will have a different brain phenotype.
 }
 \description{
 This function is used to quickly read and format FreeSurfer .stats files to R.
@@ -27,5 +28,5 @@ Written by Ethan Whitman (ethan.whitman@duke.edu)
 }
 \examples{
 LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/',
-                    sublistdir = '/Users/ew198/Documents/brainpace/data/')
+                    sublist = '/Users/ew198/Documents/brainpace/data/sublist.csv')
 }

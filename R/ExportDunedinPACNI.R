@@ -67,6 +67,9 @@ ExportDunedinPACNI <- function(data,
    # order
    data <- data[,order(colnames(data))]
    data <- data[, c(setdiff(names(data), c("ID")), c("ID"))]
+   
+   # fix FS version 7.0 naming differences
+   colnames(data) <- gsub("Proper", "", colnames(data))
   
   if (!is.null(missing_ROIs)){
     

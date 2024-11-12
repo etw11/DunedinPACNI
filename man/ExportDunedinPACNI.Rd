@@ -29,7 +29,7 @@ The output of this function will be a data.frame with DunedinPACNI scores for yo
       <outdir>/<date and time>_df_pacni.Rdata
 }
 \description{
-This function is used to estimate DunedinPACNI scores from FreeSurfer output.
+This function is used to estimate DunedinPACNI scores from FreeSurfer outputs.
 }
 \details{
 Written by Ethan Whitman (ethan.whitman@duke.edu)
