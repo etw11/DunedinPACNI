@@ -12,7 +12,9 @@ In our recent paper, we exported DunedinPACNI to three external neuroimaging sam
 The details of these results can be found in [our preprint](https://www.biorxiv.org/content/10.1101/2024.08.19.608305v1).
 
 ### What do I need to estimate DunedinPACNI?
-To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. DunedinPACNI was developed using FreeSurfer v6.0, though the algorithm works with other FreeSurfer versions.
+To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. This package can directly read FreeSurfer output into R for FreeSurfer v5, v6, and v7. DunedinPACNI was developed using FreeSurfer v6.0.
+
+If you have data from FreeSurfer v4 or earlier, you might run into bugs due to changes in ROI naming conventions in the newer FreeSurfer versions. To fix this, you can manually format your data into a CSV file to match the newer ROI naming conventions (section __Steps if you do not have complete recon-all FreeSurfer outputs from your dataset__).
 
 You also need a CSV file with all participant IDs. 
 
