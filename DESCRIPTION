@@ -1,7 +1,12 @@
 Package: DunedinPACNI
 Type: Package
-Title: DunedinPACNI
+Title: Estimate DunedinPACNI scores from MRI data
 Version: 0.0.0.1
+Authors@R: 
+    person("Ethan", "Whitman", , "ethan.whitman@duke.edu", role = c("aut", "cre"))
+Description: Read FreeSurfer data into R and apply DunedinPACNI model weights to yield 
+    estimates of the pace of aging from structural MRI of the brain.
+License: GPL-3
 RoxygenNote: 7.2.3
 Imports:
     progress
