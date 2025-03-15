@@ -149,6 +149,8 @@ ExportDunedinPACNI(data = df,
 If you have missing ROIs, this may affect the accuracy of DunedinPACNI scores in your dataset. `ExportDunedinPACNI` will throw a warning with the percentage of ROIs that are missing from the final DunedinPACNI algorithm. Many ROI values are set to 0 during training and are not included in estimating DunedinPACNI, so the degree to which missingness affects the DunedinPACNI scores may be different from the overall amount of missingness in your data.
 
 ### Version
-Current package version 0.0.0.
+Current package version 0.0.0.1
 
 This package was built using R version 4.3.2 and uses tools from the R package `progress` (version 1.2.3).
+
+This package was built by Ethan Whitman (ethan.whitman@duke.edu).
