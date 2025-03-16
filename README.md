@@ -14,7 +14,7 @@ The details of these results can be found in [our preprint](https://www.biorxiv.
 ### What do I need to estimate DunedinPACNI?
 To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. This package can directly read FreeSurfer output into R for FreeSurfer v5, v6, and v7. DunedinPACNI was developed using FreeSurfer v6.0.
 
-If you have data from FreeSurfer v4 or earlier, you might run into bugs due to changes in ROI naming conventions in the newer FreeSurfer versions. To fix this, you can manually format your data into a CSV file to match the newer ROI naming conventions (section __Steps if you do not have complete recon-all FreeSurfer outputs from your dataset__).
+If you have data from FreeSurfer v4 or earlier, you might run into bugs due to changes in ROI naming conventions in the newer FreeSurfer versions. To fix this, you can manually format your data into a CSV file to match the newer ROI naming conventions (see section __Steps if you do not have complete recon-all FreeSurfer outputs from your dataset__).
 
 You also need a CSV file with all participant IDs. 
 
@@ -63,9 +63,9 @@ Where `fsdir` should be the path to your FreeSurfer subjects directory and `subl
 
 This function outputs a data frame of formatted FreeSurfer phenotypes for all subjects.
 
-This function may take a bit of time if you have a lot of data. For example, loading ~40,000 scans takes around 1 hour.
+This function may take a bit of time if you have a lot of data. For example, loading 40,000 scans takes around 1 hour.
 
-`LoadFreeSurferStats` will throw a warning and summarize if there is any missing data.
+`LoadFreeSurferStats` will throw a warning if there is any missing data and summarize what data are missing (see section __What if I am missing estimates for some ROIs?__).
 
 ### Step 4 - estimate DunedinPACNI
 Next, you can pass the output from `LoadFreeSurferStats` directly to `ExportDunedinPACNI`.
@@ -88,7 +88,7 @@ library(DunedinPACNI)
 ```
 
 ### Step 2 - formatting data
-Next, you will need to format your data into a CSV file with particular formatting. Specifically, you need to have each row in your CSV file represent a unique scan, and each column with a uniquephenotype.
+Next, you will need to format your data into a CSV file with particular formatting. Specifically, you need to have each row in your CSV file represent a unique scan, and each column with a unique phenotype.
 
 To get a template for this file, run the following commands in R:
 ```
@@ -97,7 +97,7 @@ write.csv(data.frame(ROI_names), file = '<YOUR WORKING DIRECTORY>/data_file.csv'
 ```
 This command will output a template CSV file called `data_file.csv` to the specified directory. You'll need to format your data to match this column order and these column names. It might be helpful to use the `ROI_names` object in R for data warngling. `ROI_names` contains the correct naming conventions for each phenotype and is in the correct order. It is loaded automatically when you install the `DunedinPACNI` package.
 
-**Note** - If you downloaded FreeSurfer data from an open dataset (e.g. ADNI) you may not have access to gray-white signal intensity ratio measures, as these are not always distributed. If so, see below for now to run this package without gray-white signal intensity ratio (section __What if I am missing gray-white signal intensity ratio measures?__).
+**Note** - If you downloaded FreeSurfer data from an open dataset (e.g. ADNI) you may not have access to gray-white signal intensity ratio measures, as these are not always distributed. If so, see below for now to run this package without gray-white signal intensity ratio (see section __What if I am missing gray-white signal intensity ratio measures?__).
 
 ### Step 3 - estimate DunedinPACNI
 Once your data is formatted into a CSV with correct order and names, you can load this CSV into R and run `ExportDunedinPACNI`.
@@ -130,6 +130,8 @@ ExportDunedinPACNI(data = df,
 ### What if I am missing estimates for some ROIs?
 You may have missing data from certain ROIs because of low data quality or lack of availabiliy. If so, we allow users to impute the average score from the Dunedin Study MRI dataset. Each missing ROI will slightly reduce the accuracy of resulting DunedinPACNI scores. Because the same value is being imputed for all subjects, imputed ROIs should have a uniform effect on DunedinPACNI scores in your sample, to avoid affecting within-group comparisons. If you are missing >20% of the ROIs included in the DunedinPACNI algorithm, we think that is too much missingness to estimate DunedinPACNI and `ExportDunedinPACNI` will throw an error.
 
+If you have a lot of missingness, we would encourage you to consider [more sophisticated approaches to imputation](https://link.springer.com/article/10.1007/s12021-019-09426-x). Ultimately, however, how you handle missing data is up to your preferences, the specifics of your data, and your research question.
+
 To run `ExportDunedinPACNI` with missing ROIs, first make sure columns for those phenotypes are removed from the data frame being passed to `ExportDunedinPACNI`. 
 
 Next, find the naming convention for the missing ROIs using `ROI_names`. To check this, run these commands in R:
@@ -146,7 +148,7 @@ ExportDunedinPACNI(data = df,
                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
 ```
 
-If you have missing ROIs, this may affect the accuracy of DunedinPACNI scores in your dataset. `ExportDunedinPACNI` will throw a warning with the percentage of ROIs that are missing from the final DunedinPACNI algorithm. Many ROI values are set to 0 during training and are not included in estimating DunedinPACNI, so the degree to which missingness affects the DunedinPACNI scores may be different from the overall amount of missingness in your data.
+If you have missing ROIs, this may affect the accuracy of DunedinPACNI scores in your dataset. `ExportDunedinPACNI` will throw a warning with the percentage of ROIs that are missing from the final DunedinPACNI algorithm. Due to elastic net regularization, many ROI values are set to 0 and are not included in the final DunedinPACNI algorithm, so the degree to which missingness affects the DunedinPACNI scores may be different from the overall amount of missingness in your data.
 
 ### Version
 Current package version 0.0.0.1
