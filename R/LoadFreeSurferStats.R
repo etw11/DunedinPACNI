@@ -17,8 +17,8 @@
 #'     will have a unique participant and each column will have a different brain phenotype.
 #'
 #' @examples 
-#' LoadFreeSurferStats(fsdir = '/Users/ew198/Documents/data/freesurfer_stats/',
-#'                     sublist = '/Users/ew198/Documents/brainpace/data/sublist.csv')
+#' LoadFreeSurferStats(fsdir = '<PATH TO FREESURFER SUBJECTS DIRECTORY>',
+#'                     sublist = '<PATH TO SUBJECT ID LIST>/sublist.csv')
 #' @import progress
 #' @export
 

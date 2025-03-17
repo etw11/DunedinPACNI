@@ -26,10 +26,10 @@
 #'       <outdir>/<date and time>_df_pacni.Rdata
 #' @examples 
 #' ExportDunedinPACNI(data = df,
-#'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/')
+#'                    outdir = '<PATH TO OUTPUT DIRECTORY>')
 #' 
 #' ExportDunedinPACNI(data = df,
-#'                    outdir = '/Users/ew198/Documents/brainpace/scripts/pacni_package/',
+#'                    outdir = '<PATH TO OUTPUT DIRECTORY>',
 #'                    missing_ROIs = c('GWR_parsopercularis_right', 'GWR_parsorbitalis_right'))
 #' @import progress
 #' @export
