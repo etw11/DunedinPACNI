@@ -1,3 +1,14 @@
+The copyrights of this software are managed by Duke University. As such, two licenses for this software are offered:
+1. An open-source license under the GNU General Public License v3.0 (GPLv3) license for non-commercial academic use.
+2. A custom license with Duke University, for commercial use or uses without the GNU General Public License v3.0 (GPLv3) license restrictions. 
+ 
+As a recipient of this software, you may choose which license to receive the code under. Outside contributions to the Duke-owned code base cannot be accepted unless the contributor transfers the copyright to those changes over to Duke University.
+ 
+To enter a custom license agreement without the GNU General Public License v3.0 (GPLv3) license restrictions, please contact Duke Office for Translation & Commercialization (OTC)  at otcquestions@duke.edu with
+reference to “OTC File No. 8566” in your email. 
+ 
+Please note that this software is distributed AS IS, WITHOUT ANY WARRANTY; and without the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
