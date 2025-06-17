@@ -185,7 +185,7 @@ ExportDunedinPACNI <- function(data,
   # save out
   outname <- paste0(gsub(" ", "_", gsub(":","_",date())), "_", round(runif(1,100,999),0))
   write.csv(df_pacni, file = paste0(outdir, outname, '_df_pacni', '.csv'), row.names = FALSE)
-  print(paste0('DunedinPACNI scores saved as:', outdir, outname, '_df_pacni', '.csv'))
+  print(paste0('DunedinPACNI scores saved to: ', outdir, outname, '_df_pacni', '.csv'))
   
   return(df_pacni)
 }
