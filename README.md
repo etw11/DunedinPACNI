@@ -6,12 +6,12 @@ The DunedinPACNI algorithm was designed to predict the longitudinal [Pace of Agi
 
 Using brain MRI scans from the Dunedin Study at age 45, we developed an algorithm to accurately estimate the Pace of Aging phenotype among Dunedin Study members (panel C in figure below). Specifically, the algorithm uses FreeSurfer-derived measures of cortical thickness, cortical surface area, cortical gray matter volume, cortical gray-white signal intensity ratio all according to the Desikan-Killiany parcellation and subcortical and cerebellar volumes according to the FreeSurfer ASEG output.
 
-![this Figure](https://www.biorxiv.org/content/biorxiv/early/2024/08/22/2024.08.19.608305/F1.large.jpg?width=800&height=600&carousel=1) 
+![this Figure](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs43587-025-00897-z/MediaObjects/43587_2025_897_Fig1_HTML.png?as=webp) 
 
 ### How do we know DunedinPACNI works?
 In our recent paper, we exported DunedinPACNI to three external neuroimaging samples (Human Connectome Project, Alzheimer's Disease Neuroimaging Initiative, UK Biobank, and BrainLat) to test the utility of DunedinPACNI in new data. We found that DunedinPACNI has excellent test-retest reliability, is associated with cognition, cognitive impairment, predicts cognitive decline, predicts hippocampal atrophy, predicts chronic disease onset, predicts death, is associated with socioeconomic inequality, and generalizes well in Latin American dementia patients (panel D in figure above).
 
-The details of these results can be found in [our preprint](https://www.biorxiv.org/content/10.1101/2024.08.19.608305v1).
+These analyses are published in [our manuscript in Nature Aging](https://www.nature.com/articles/s43587-025-00897-z).
 
 ### What do I need to estimate DunedinPACNI?
 To estimate DunedinPACNI in new data, you will need brain MRI data parcellated using FreeSurfer. This package can directly read FreeSurfer output into R for FreeSurfer v5, v6, and v7. DunedinPACNI was developed using FreeSurfer v6.0.
