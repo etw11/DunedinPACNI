@@ -229,7 +229,8 @@ LoadFreeSurferStats <- function(fsdir,
     DunedinPACNI estimates.\033[0m\n")
   }
   
-  data[,c(2:ncol(data))] <- data.frame(apply(data[,c(2:ncol(data))], 2, function(x) as.numeric(x)))
+  #data[,c(2:ncol(data))] <- data.frame(apply(data[,c(2:ncol(data))], 2, function(x) as.numeric(x)))
+  data[, c(2:ncol(data))] <- as.data.frame(lapply(data[, c(2:ncol(data))], as.numeric))
   return(data)
  
 }
