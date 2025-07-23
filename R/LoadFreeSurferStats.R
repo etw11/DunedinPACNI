@@ -230,8 +230,8 @@ LoadFreeSurferStats <- function(fsdir,
   }
 
   #data[,c(2:ncol(data))] <- data.frame(apply(data[,c(2:ncol(data))], 2, function(x) as.numeric(x)))
-  data[, c(2:ncol(data))] <- as.data.frame(lapply(data[, c(2:ncol(data))], as.numeric))
-
+  #data[, c(2:ncol(data))] <- as.data.frame(lapply(data[, c(2:ncol(data))], as.numeric))
+  data[ , c(2:ncol(data))] <- lapply(data[ , c(2:ncol(data))], function(x) as.numeric(x))
   return(data)
  
 }
