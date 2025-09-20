@@ -9,7 +9,7 @@ Using brain MRI scans from the Dunedin Study at age 45, we developed an algorith
 ![this Figure](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs43587-025-00897-z/MediaObjects/43587_2025_897_Fig1_HTML.png?as=webp) 
 
 ### How do we know DunedinPACNI works?
-In our recent paper, we exported DunedinPACNI to three external neuroimaging samples (Human Connectome Project, Alzheimer's Disease Neuroimaging Initiative, UK Biobank, and BrainLat) to test the utility of DunedinPACNI in new data. We found that DunedinPACNI has excellent test-retest reliability, is associated with cognition, cognitive impairment, predicts cognitive decline, predicts hippocampal atrophy, predicts chronic disease onset, predicts death, is associated with socioeconomic inequality, and generalizes well in Latin American dementia patients (panel D in figure above).
+In our recent paper, we exported DunedinPACNI to four external neuroimaging samples (Human Connectome Project, Alzheimer's Disease Neuroimaging Initiative, UK Biobank, and BrainLat) to test the utility of DunedinPACNI in new data. We found that DunedinPACNI has excellent test-retest reliability, is associated with cognition, cognitive impairment, predicts cognitive decline, predicts hippocampal atrophy, predicts chronic disease onset, predicts death, is associated with socioeconomic inequality, and generalizes well in Latin American dementia patients (panel D in figure above).
 
 These analyses are published in [our manuscript in Nature Aging](https://www.nature.com/articles/s43587-025-00897-z).
 
